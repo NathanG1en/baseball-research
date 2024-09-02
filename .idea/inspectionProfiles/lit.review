@@ -1,0 +1,30 @@
+Predicting Pitcher Efficacy using Physical Pitch Characteristics Tejas Oberoi 
+Abstract 
+•	Determine which physical features can explain most of the variance to determine pitcher efficacy
+•	“applied the Neural Network model to predict the efficacy metrics using all sixteen features, while we used the Linear Regression model to analyze the individual impact of each feature for predicting the efficacy metrics”. Oberoi then determined “ballFrequency is the most impactful in predicting WHIP. Consider incorporating a correlation matrix in earlier stages of analysis 
+•	Sabermetrics- analysis of advanced stats in baseball such as whip, fip
+•	Physical features allow for prediction of pitches 
+•	Hypothesis : “whether physical pitch characteristics can predict greater than 50% of the variance, defined by r^2, in the efficacy of a pitcher”
+Dataset Preprocessing
+•	Oberoi deleted data / pitches that had extremely rare outcomes- pickoffs, and also used only data from pitchers that had pitched at least 1000 pitches over the (5) seasons. They also reduced the size of the data set by eliminating the number of columns that were irrelevant to their study 
+•	Included the variable: “The “zone” feature determined the location of the thrown pitch, whether it was thrown “high” (above batter’s waist) or “low” (below batter’s knee).”
+•	“ballFrequency” and “pitchTypeEntropy” are variables created to determine the pitchers specific frequency in throwing that pitch and to describe the distribution of the type of pitch thrown for each pitcher, respectively.  “pitchTypeEntropy” (*see applied formula, perhaps applicable to our study) used Shannon information entropy value for expectation, a higher e(x) implied the pitcher threw a larger variety of pitches compared to a small e(x), implying the pitcher throws fewer types of those pitches. 
+Input features for each pitcher using the data given for each thrown pitch 
+•	Used pandas groupby object created from the original data frame 
+•	From each pitcher group (there were 4) they took the 5th and 95th percentiles of each quantitative feature in all the pitches. Each of the qualitative features, relative frequencies were computed of their occurrences in the ratio of pitches for each pitcher group 
+Output Pitcher Efficacy Metric Explanations 
+•	Early analysis: used WHIP walks+hits/ip (measures “effectiveness” of pitcher by determining baserunners) 
+•	BAA hits/atbats (measures pitcher efficacy based on each batter’s ability). Used the same groupby object and dataframe as the whip. 
+•	Fielding Independent pitching – metrics controlled strictly by the pitcher
+•	Metrics described above interpreted same outcome- pitchers efficacy while minimizing the dependence on confounding factors 
+•	The dataset of 777 pitchers was split into training dataset/validation dataset. Neural network model produced to evaluate dataset by varying both of the hidden layer widths. Used leaky_relu activation function. The training and validation input dataset were normalized by using z score. “A training loop was run on the 582-pitcher training dataset using 50 epochs on a CPU, batch sizes of 4, and an Adam optimizer with a learning rate of 0.001 and a weight decay of 0.01. In addition, a validation dataset of 195 pitchers was evaluated. After the model ran 50 loops, the same validation data was used to compute the accuracy and root mean squared error (RMSE).” Then created scatterplots
+•	Used linear regression model to determine the correlation btwn every physical feature and the three output metrics (whip, baa,..)
+•	Essentially, used the experiments to determine if machine learning models could predict the metrics enough to satisfy the hypothesis. calculated rmse , r , r^2, 
+•	For baseline prediction, observed using the mean whip value in the validation dataset as the constant value yielded 48%accuracy of rms, then ran the NN , and compared that validation accuracy with the validation set. Then, ran an F test on the rmse of the NN and the SD of the whip values which yielded a p val that implies the NN produced stat sig results for predicting whip. Same process was done for predicting the baa metric 
+•	Figure 2 “input physical features vs whip” 
+•	Table 2”f-test results for whip, baa, and fip”. Used to highlight the stat significance 
+•	Same process for predicting FIP
+•	Using whip,baa,fip as input features 
+•	Conclusion: “Based on the similar RMSEs and p-values from the F-test for the NN and LR models, the NN model did not use the other 15 features to its advantage and most likely implemented a linear regression-like function using the “ballFrequency” feature instead of a more sophisticated function using multiple features. Furthermore, the low correlation values and high p-values for the other 15 features implied that they do not add any meaningful value to predicting WHIP.”
+•	“ballFrequency” is the most important physical feature in determining whip bc it has lowest p val in the Ftest and highest linear correlation
+  code used: https://github.com/toberoi05/BaseballResearch/blob/main/BaseballResearchCode_with_25GB_RAM.ipynb 
