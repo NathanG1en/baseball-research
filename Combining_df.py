@@ -2,8 +2,8 @@ import pandas as pd
 
 
 season_21 = pd.read_csv('data/pitches_21.csv')
-season_22 = pd.read_csv('data/pitches_21.csv')
-season_23 = pd.read_csv('data/pitches_21.csv')
+season_22 = pd.read_csv('data/pitches_22.csv')
+season_23 = pd.read_csv('data/pitches_23.csv')
 
 combined_df = pd.concat([season_21, season_22, season_23])
 
@@ -30,6 +30,7 @@ cleaned_df = cleaned_df.drop(columns = ['Unnamed: 0'])
 
 cleaned_df = cleaned_df.sort_values(by=['gameid', 'ab', 'pitchnum'])
 
+print(cleaned_df.head(30))
 
 cleaned_df.to_pickle('data/aggregated_data.pkl')
 
