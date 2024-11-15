@@ -26,7 +26,10 @@ explainer = shap.Explainer(best_xgb_model, X_balanced)
 st.title("SHAP Analysis for Pitchers")
 
 # Dropdown for selecting a pitcher
-pitcher_names = data['pitcher'].unique()  # Assuming 'pitcher' column exists in data
+# Sort pitcher names alphabetically
+pitcher_names = sorted(data['pitcher'].unique())  # Sorting the unique pitcher names
+
+# Dropdown for selecting a pitcher
 selected_pitcher = st.selectbox("Choose a Pitcher:", pitcher_names)
 
 # Filter data for the selected pitcher
