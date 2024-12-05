@@ -12,15 +12,15 @@ import pickle
 # data = pd.read_csv('data.csv')  # Data with pitcher names in the same order as X_balanced
 
 # To load the model later
-with open('best_xgb_model.pkl', 'rb') as file:
+with open('best_xgb_model_reduced.pkl', 'rb') as file:
     best_xgb_model = pickle.load(file)
 
-X_balanced = pd.read_csv('data/X_balanced.csv', index_col=0)
-data = pd.read_csv('data/data_balanced.csv')
+X_balanced = pd.read_csv('data/just_X.csv', index_col=0)
+data = pd.read_csv('data/just_data.csv')
 
 
 # Create SHAP explainer
-explainer = shap.Explainer(best_xgb_model, X_balanced)
+explainer = shap.TreeExplainer(best_xgb_model, X_balanced)
 
 # Streamlit app
 st.title("SHAP Analysis for Pitchers")
@@ -51,6 +51,12 @@ selected_index = st.selectbox("Select a Pitch Instance:", pitch_indices)
 st.subheader(f"SHAP Waterfall Plot for Pitch Instance {selected_index}")
 single_instance = X_balanced.iloc[[selected_index]]
 shap_values_single = explainer(single_instance)
+
+# Extract the shap values for the selected instance
+shap_values_single_instance = shap_values_single[0]  # Assuming shap_values_single is a list-like object
+
+# Plotting the SHAP waterfall plot
 fig_waterfall, ax = plt.subplots()
-shap.waterfall_plot(shap_values_single[0], show=False)
+shap.plots.waterfall(shap_values_single_instance, show=False)
 st.pyplot(fig_waterfall)
+
