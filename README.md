@@ -11,7 +11,14 @@ This is the meat and bones of our project as it contains:
 - Random Forest Classifier attempts
 - XGBoost Attempts
 - SHAP Graphs
-- Models saved as pkl files - 
+- Models saved as pkl files 
+
+## SHAP_Graphs.py
+This contains our Streamlit application:
+- We read in a model
+- Then we generate all the summary plots for each pitcher
+- Finally, we generate all the waterfall plots for each individual pitch <br/> 
+We used streamlit to let us interact with all of these plots in a user-friendly manner. 
 ## EDA Folder
 This folder contains a lot of our EDA, exploring a lot of avenues, although not all of them turned out to be fruitful. The most important figures from our presentation are contained in the "More_EDA.ipynb" file. 
 
